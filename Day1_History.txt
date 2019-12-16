@@ -1,0 +1,96 @@
+    1  ls
+    2  init 6 
+    3  ls
+    4  apt-get update; apt-get install openssh ansible sshpass -y 
+    5  cat /etc/*-release
+    6  apt-get install openssh-server ansible sshpass -y 
+    7  ls
+    8  ansible --version
+    9  ls
+   10  hostname
+   11  hostname ansible-clt
+   12  hostname > /etc/hostname 
+   13  exit
+   14  ls
+   15  git clone https://github.com/amitvashisttech/ansible-acc-20191216.git
+   16  ls
+   17  cd ansible-acc-20191216/
+   18  ls
+   19  mkdir 01-Intro
+   20  ls
+   21  cd 01-Intro/
+   22  ls
+   23  cd ..
+   24  ls
+   25  mv 01-Intro 01-Inventory
+   26  ls
+   27  cd 01-Inventory/
+   28  ls
+   29  vi inventory
+   30  passwd vagrant
+   31  ssh vagrant@172.31.0.11
+   32  ssh vagrant@172.31.0.12
+   33  ssh vagrant@172.31.0.11
+   34  ls
+   35  cd ..
+   36  ls
+   37  mkdir 00-Setup
+   38  cd 00-Setup/
+   39  ls
+   40  vi Vagrantfile
+   41  ls
+   42  cd ..
+   43  ls
+   44  git add . ; git commit -m "Ansible_Setup"; git push 
+   45  git config --global user.email "amitvashisttech@example.com"
+   46  git config --global user.name "Amit Vashist"
+   47  git add . ; git commit -m "Ansible_Setup"; git push 
+   48  ls
+   49  cat 00-Setup/Vagrantfile 
+   50  ls
+   51  cd 01-Inventory/
+   52  ls
+   53  cat inventory 
+   54  vi /etc/ssh/sshd_config 
+   55  service ssh restart
+   56  ls
+   57  ansible 172.31.0.11 -i inventory -u vagrant -m ping -k 
+   58  ssh vagrant@172.31.0.11
+   59  ls
+   60  ansible 172.31.0.11 -i inventory -u vagrant -m ping -k 
+   61  ansible 172.31.0.12 -i inventory -u vagrant -m ping -k 
+   62  apt-get install python -y 
+   63  ssh vagrant@172.31.0.12
+   64  ls
+   65  ansible all -i inventory -u vagrant -m ping -k 
+   66  ssh vagrant@172.31.0.10
+   67  ip addr 
+   68  dhclient enp0s8
+   69  ls
+   70  ip addr 
+   71  ifconfig enp0s8 172.31.0.10 mask 255.255.255.0
+   72  ifconfig enp0s8 172.31.0.10 subnet 255.255.255.0
+   73  ifconfig enp0s8 172.31.0.10 
+   74  ip addr 
+   75  ssh vagrant@172.31.0.10
+   76  ansible all -i inventory -u vagrant -m ping -k 
+   77  ls
+   78  cd ..
+   79  ls
+   80  df -h
+   81  ansible all -i inventory -u vagrant -m command -a 'df -h' -k 
+   82  ls
+   83  cd 01-Inventory/
+   84  ls
+   85  ansible all -i inventory -u vagrant -m command -a 'df -h' -k 
+   86  ansible all -i inventory -u vagrant -m command -a 'arch' -k 
+   87  ansible all -i inventory -u vagrant -m command -a 'uname -a' -k 
+   88  ls
+   89  cat /etc/*-release
+   90  ansible all -i inventory -u vagrant -m command -a 'cat /etc/*-release' -k 
+   91  ansible all -i inventory -u vagrant -m shell -a 'cat /etc/*-release' -k 
+   92  history 
+   93  ls
+   94  cd ..
+   95  ls
+   96  history > Day1_History.txt
