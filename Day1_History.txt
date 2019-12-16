@@ -94,3 +94,89 @@
    94  cd ..
    95  ls
    96  history > Day1_History.txt
+   97  git add . ; git commit -m "Day1" ; git push 
+   98  history 
+   99  ls
+  100  cp -rf 01-Inventory/ 02-Inventory-Advnace/
+  101  ls
+  102  cd 02-Inventory-Advnace/
+  103  ls
+  104  vim inventory 
+  105  ansible all -i inventory -u vagrant -m ping -k 
+  106  ansible web -i inventory -u vagrant -m ping -k 
+  107  ansible db -i inventory -u vagrant -m ping -k 
+  108  vim inventory 
+  109  ansible db -i inventory -m ping  
+  110  ansible web -i inventory -m ping  
+  111  vim inventory 
+  112  ansible web -i inventory -m ping  
+  113  vim inventory 
+  114  ansible dc -i inventory -m ping  
+  115  vi inventory 
+  116  passwd 
+  117  ansible dc -i inventory -m ping  
+  118  vi /etc/ssh/sshd_config 
+  119  service ssh restart
+  120  ansible dc -i inventory -m ping  
+  121  passwd 
+  122  ansible dc -i inventory -m ping  
+  123  ssh root@172.31.0.10
+  124  vi /etc/ssh/sshd_config 
+  125  service ssh restart
+  126  ssh root@172.31.0.10
+  127  ansible dc -i inventory -m ping  
+  128  cat inventory 
+  129  cd ../
+  130  ls
+  131  git add . ; git commit -m "Day1" ; git push 
+  132  ls
+  133  cat 02-Inventory-Advnace/inventory 
+  134  ls
+  135  cp -rf 03-Scale-out-Inventory
+  136  mkdir 03-Scale-out-Inventory
+  137  ls
+  138  cd 03-Scale-out-Inventory/
+  139  ls
+  140  mkdir {production,test}/{group_vars,host_vars} -p 
+  141  apt-get install tree -y 
+  142  tree .
+  143  touch {production,test}/inventory
+  144  tree .
+  145  ls
+  146  cp -rf ../02-Inventory-Advnace/inventory production/inventory 
+  147  ls
+  148  tree .
+  149  cat production/inventory 
+  150  ls
+  151  vim production/inventory 
+  152  ls
+  153  vim production/group_vars/all
+  154  vim production/inventory 
+  155  ls
+  156  ansible dc -i production/inventory -m ping  
+  157  tree ,
+  158  tree .
+  159  cat production/group_vars/all 
+  160  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s  
+  161  cat production/group_vars/all 
+  162  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s  ls
+  163  ls
+  164  cd production/
+  165  ls
+  166  cat inventory 
+  167  cp -rf group_vars/all group_vars/web
+  168  cp -rf group_vars/all group_vars/db
+  169  vi group_vars/web 
+  170  vi group_vars/db
+  171  cd ..
+  172  tree .
+  173  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s 
+  174  ls
+  175  cp -rf production/group_vars/all production/host_vars/172.31.0.10
+  176  vi production/host_vars/172.31.0.10
+  177  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s 
+  178  tree . 
+  179  ls
+  180  cd ..
+  181  ls
+  182  history > Day1_History.txt 
