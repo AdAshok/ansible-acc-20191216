@@ -1,0 +1,41 @@
+---
+
+
+- hosts: web
+  become: yes 
+
+  tasks:
+  - name: Install HTTPD Packages
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Start HTTPD Service
+    service: name=httpd state=started enabled=True
+    when: ansible_os_family == "RedHat"
+
+  - name: Install Apache Packages
+    apt: name=apache2 state=present
+
+  - name: Start Apache Service
+    service: name=apache2 state=started enabled=True
+
+  - name: Deploy Sample Configuration
+    copy: src=files/sample.html dest=/var/www/html/index.html
+
+  - name: Deploy Sample Configuration Template
+    template: src=templates/sample.j2 dest=/var/www/html/sample.html
+
+- hosts: db
+  become: yes 
+
+  tasks:
+  - name: Install MariaDB Packages
+    apt: name=mariadb-server state=present
+
+- hosts: db:web
+  become: yes 
+
+  tasks:
+  - name: Stop the Firewall
+    service: name=ufw state=stopped
+
