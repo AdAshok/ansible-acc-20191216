@@ -1,0 +1,340 @@
+    1  ls
+    2  init 6 
+    3  ls
+    4  apt-get update; apt-get install openssh ansible sshpass -y 
+    5  cat /etc/*-release
+    6  apt-get install openssh-server ansible sshpass -y 
+    7  ls
+    8  ansible --version
+    9  ls
+   10  hostname
+   11  hostname ansible-clt
+   12  hostname > /etc/hostname 
+   13  exit
+   14  ls
+   15  git clone https://github.com/amitvashisttech/ansible-acc-20191216.git
+   16  ls
+   17  cd ansible-acc-20191216/
+   18  ls
+   19  mkdir 01-Intro
+   20  ls
+   21  cd 01-Intro/
+   22  ls
+   23  cd ..
+   24  ls
+   25  mv 01-Intro 01-Inventory
+   26  ls
+   27  cd 01-Inventory/
+   28  ls
+   29  vi inventory
+   30  passwd vagrant
+   31  ssh vagrant@172.31.0.11
+   32  ssh vagrant@172.31.0.12
+   33  ssh vagrant@172.31.0.11
+   34  ls
+   35  cd ..
+   36  ls
+   37  mkdir 00-Setup
+   38  cd 00-Setup/
+   39  ls
+   40  vi Vagrantfile
+   41  ls
+   42  cd ..
+   43  ls
+   44  git add . ; git commit -m "Ansible_Setup"; git push 
+   45  git config --global user.email "amitvashisttech@example.com"
+   46  git config --global user.name "Amit Vashist"
+   47  git add . ; git commit -m "Ansible_Setup"; git push 
+   48  ls
+   49  cat 00-Setup/Vagrantfile 
+   50  ls
+   51  cd 01-Inventory/
+   52  ls
+   53  cat inventory 
+   54  vi /etc/ssh/sshd_config 
+   55  service ssh restart
+   56  ls
+   57  ansible 172.31.0.11 -i inventory -u vagrant -m ping -k 
+   58  ssh vagrant@172.31.0.11
+   59  ls
+   60  ansible 172.31.0.11 -i inventory -u vagrant -m ping -k 
+   61  ansible 172.31.0.12 -i inventory -u vagrant -m ping -k 
+   62  apt-get install python -y 
+   63  ssh vagrant@172.31.0.12
+   64  ls
+   65  ansible all -i inventory -u vagrant -m ping -k 
+   66  ssh vagrant@172.31.0.10
+   67  ip addr 
+   68  dhclient enp0s8
+   69  ls
+   70  ip addr 
+   71  ifconfig enp0s8 172.31.0.10 mask 255.255.255.0
+   72  ifconfig enp0s8 172.31.0.10 subnet 255.255.255.0
+   73  ifconfig enp0s8 172.31.0.10 
+   74  ip addr 
+   75  ssh vagrant@172.31.0.10
+   76  ansible all -i inventory -u vagrant -m ping -k 
+   77  ls
+   78  cd ..
+   79  ls
+   80  df -h
+   81  ansible all -i inventory -u vagrant -m command -a 'df -h' -k 
+   82  ls
+   83  cd 01-Inventory/
+   84  ls
+   85  ansible all -i inventory -u vagrant -m command -a 'df -h' -k 
+   86  ansible all -i inventory -u vagrant -m command -a 'arch' -k 
+   87  ansible all -i inventory -u vagrant -m command -a 'uname -a' -k 
+   88  ls
+   89  cat /etc/*-release
+   90  ansible all -i inventory -u vagrant -m command -a 'cat /etc/*-release' -k 
+   91  ansible all -i inventory -u vagrant -m shell -a 'cat /etc/*-release' -k 
+   92  history 
+   93  ls
+   94  cd ..
+   95  ls
+   96  history > Day1_History.txt
+   97  git add . ; git commit -m "Day1" ; git push 
+   98  history 
+   99  ls
+  100  cp -rf 01-Inventory/ 02-Inventory-Advnace/
+  101  ls
+  102  cd 02-Inventory-Advnace/
+  103  ls
+  104  vim inventory 
+  105  ansible all -i inventory -u vagrant -m ping -k 
+  106  ansible web -i inventory -u vagrant -m ping -k 
+  107  ansible db -i inventory -u vagrant -m ping -k 
+  108  vim inventory 
+  109  ansible db -i inventory -m ping  
+  110  ansible web -i inventory -m ping  
+  111  vim inventory 
+  112  ansible web -i inventory -m ping  
+  113  vim inventory 
+  114  ansible dc -i inventory -m ping  
+  115  vi inventory 
+  116  passwd 
+  117  ansible dc -i inventory -m ping  
+  118  vi /etc/ssh/sshd_config 
+  119  service ssh restart
+  120  ansible dc -i inventory -m ping  
+  121  passwd 
+  122  ansible dc -i inventory -m ping  
+  123  ssh root@172.31.0.10
+  124  vi /etc/ssh/sshd_config 
+  125  service ssh restart
+  126  ssh root@172.31.0.10
+  127  ansible dc -i inventory -m ping  
+  128  cat inventory 
+  129  cd ../
+  130  ls
+  131  git add . ; git commit -m "Day1" ; git push 
+  132  ls
+  133  cat 02-Inventory-Advnace/inventory 
+  134  ls
+  135  cp -rf 03-Scale-out-Inventory
+  136  mkdir 03-Scale-out-Inventory
+  137  ls
+  138  cd 03-Scale-out-Inventory/
+  139  ls
+  140  mkdir {production,test}/{group_vars,host_vars} -p 
+  141  apt-get install tree -y 
+  142  tree .
+  143  touch {production,test}/inventory
+  144  tree .
+  145  ls
+  146  cp -rf ../02-Inventory-Advnace/inventory production/inventory 
+  147  ls
+  148  tree .
+  149  cat production/inventory 
+  150  ls
+  151  vim production/inventory 
+  152  ls
+  153  vim production/group_vars/all
+  154  vim production/inventory 
+  155  ls
+  156  ansible dc -i production/inventory -m ping  
+  157  tree ,
+  158  tree .
+  159  cat production/group_vars/all 
+  160  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s  
+  161  cat production/group_vars/all 
+  162  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s  ls
+  163  ls
+  164  cd production/
+  165  ls
+  166  cat inventory 
+  167  cp -rf group_vars/all group_vars/web
+  168  cp -rf group_vars/all group_vars/db
+  169  vi group_vars/web 
+  170  vi group_vars/db
+  171  cd ..
+  172  tree .
+  173  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s 
+  174  ls
+  175  cp -rf production/group_vars/all production/host_vars/172.31.0.10
+  176  vi production/host_vars/172.31.0.10
+  177  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s 
+  178  tree . 
+  179  ls
+  180  cd ..
+  181  ls
+  182  history > Day1_History.txt 
+  183  git add . ; git commit -m "Day1" ; git push 
+  184  history 
+  185  ls
+  186  cat 03-Scale-out-Inventory/production/group_vars/all 
+  187  ls
+  188  cd 00-Setup/
+  189  ls
+  190  cat Vagrantfile 
+  191  ls
+  192  cat /root/.ssh/known_hosts 
+  193  grep -i checking /etc/ansible/ansible.cfg 
+  194  vi /etc/hosts
+  195  ls
+  196  cd ansible-acc-20191216/
+  197  ls
+  198  cp -rf 02-Inventory-Advnace 04-Ansible-Conf
+  199  ls
+  200  cd 04-Ansible-Conf/
+  201  ls
+  202  cd /etc/ansible/
+  203  ls
+  204  cat hosts 
+  205  ls
+  206  cd - 
+  207  ls
+  208  cat inventory 
+  209  ansible dc -i inventory -m ping 
+  210  cat ~/.ssh/known_hosts 
+  211  > ~/.ssh/known_hosts 
+  212  cat ~/.ssh/known_hosts 
+  213  ansible dc -i inventory -m ping 
+  214  cat ~/.ssh/known_hosts 
+  215  ansible dc -i inventory -m ping 
+  216  vim ansible.cfg
+  217  ansible dc -i inventory -m ping 
+  218  ls
+  219  ansible dc -i inventory -m command -a 'df -h'
+  220  ansible dc -i inventory -m command -a 'mkdir -p /var/tmp/test01'
+  221  ld
+  222  ls
+  223  init 6 
+  224  ls
+  225  cd ansible-acc-20191216/
+  226  s
+  227  ls
+  228  cd 04-Ansible-Conf/
+  229  ls
+  230  cat ~/.ssh/known_hosts 
+  231  ansible dc -i inventory -m command -a 'df -h'
+  232  cat ansible.cfg 
+  233  echo $ANSIBLE_HOST_KEY_CHECKING
+  234  export ANSIBLE_HOST_KEY_CHECKING=False
+  235  echo $ANSIBLE_HOST_KEY_CHECKING
+  236  cat ansible.cfg 
+  237  cat ~/.ssh/known_hosts 
+  238  ansible dc -i inventory -m command -a 'df -h'
+  239  ifconfig ens0p8 172.31.0.10
+  240  ip addr 
+  241  ifconfig enp0s8 172.31.0.10
+  242  ansible dc -i inventory -m command -a 'df -h'
+  243  ip addr 
+  244  route -n 
+  245  ping 172.31.0.11
+  246  ansible dc -i inventory -m command -a 'df -h'
+  247  ifconfig 
+  248  ifdown enp0s8
+  249  ip addr 
+  250  systemctl network restart
+  251  ls
+  252  ip addr 
+  253  systemctl NetworkManager restart
+  254  systemctl restart NetworkManager 
+  255  systemctl restart network
+  256  ls
+  257  ip link 
+  258  ip link --help
+  259  ip link -h 
+  260  ip --help
+  261  ls
+  262  init 6 
+  263  ls
+  264  echo $ANSIBLE_HOST_KEY_CHECKING
+  265  cd ansible-acc-20191216/04-Ansible-Conf/
+  266  ls
+  267  cat ~/.ssh/known_hosts 
+  268  ls
+  269  ping 172.31.0.11
+  270  ping 172.31.0.12
+  271  ls
+  272  vi ansible.cfg 
+  273  ansible dc -m command -a 'df -h'
+  274  vi inventory 
+  275  ansible dc -m command -a 'df -h'
+  276  cat ansible.cfg 
+  277  export ANSIBLE_HOST_KEY_CHECKING=False
+  278  ansible dc -m command -a 'df -h'
+  279  cat ~/.ssh/known_hosts 
+  280  ls
+  281  cd ..
+  282  ls
+  283  git add . ; git commit -m "Day2" ; git push 
+  284  cat /etc/ansible/hosts 
+  285  ls
+  286  cp -rf 04-Ansible-Conf 05-Modules
+  287  ls
+  288  s
+  289  ls
+  290  ansible-doc -l 
+  291  ansible-doc apt 
+  292  ls
+  293  cd 05-Modules/
+  294  ls
+  295  ansible web -m apt -a "name=net-tools state=present" 
+  296  ansible web -m apt -a "name=net-tools state=present" -s 
+  297  ansible web -m apt -a "name=apache2 state=present" -s 
+  298  ansible-doc service
+  299  ansible web -m service -a "name=apache2 state=started" -s 
+  300  ansible web -m service -a "name=apache2 state=stopped" -s 
+  301  ansible web -m service -a "name=apache2 state=started" -s 
+  302  ansible web -m service -a "name=apache2 state=stopped" -s 
+  303  ls
+  304  history 
+  305  ansible web -m apt -a "name=mariadb-server state=present" -s 
+  306  history 
+  307  s
+  308  ls
+  309  cat ansible.cfg 
+  310  ls
+  311  vim inventory 
+  312  ansible web -m ping  
+  313  ansible db -m ping  
+  314  ansible db:web -m ping  
+  315  ls
+  316  vim inventory 
+  317  ansible db:web -m ping  
+  318  ansible 'web:&prod' -m ping  
+  319  ansible 'db:&prod' -m ping  
+  320  ansible 'db:&test' -m ping  
+  321  ls
+  322  cat inventory 
+  323  ls
+  324  vi inventory 
+  325  ansible 'web' -m ping  
+  326  ansible 'web:&uat' -m ping  
+  327  ansible 'web:&prod' -m ping  
+  328  ansible 'db:&prod' -m ping  
+  329  ls
+  330  vim inventory 
+  331  ansible 'db:&prod' -m ping  
+  332  ansible 'db:&prod:!python' -m ping  
+  333  vi inventory 
+  334  ansible 'db:&prod:!python' -m ping  
+  335  ls
+  336  cd ..
+  337  ls
+  338  git add . ; git commit -m "Day2" ; git push 
+  339  ls
+  340  history > Day2_History.txt 
