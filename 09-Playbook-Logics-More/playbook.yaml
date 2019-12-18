@@ -2,7 +2,11 @@
 
 
 - hosts: web:db
-  become: yes 
+  become: yes
+  vars:
+    http_port: 80
+    doc_root: /var/www/html/paymemt-gw
+    doc_dir: /ansible/ 
 
   tasks:
   - name: Install HTTPD Packages
@@ -19,16 +23,24 @@
   - name: Start Apache Service
     service: name=apache2 state=started enabled=True
 
-  - name: Deploy Sample Configuration
-    copy: src=files/sample.html dest=/var/www/html/index.html
+  - name: Deploy Apache Server Configuration
+    template: src=templates/apache2.j2 dest=/etc/apache2/apache2.conf
     notify:
       - Restart Apache
 
-  - name: Deploy Sample Configuration Template
-    template: src=templates/sample.j2 dest=/var/www/html/sample.html
+
+  - name: Create Site Location
+    file: path={{doc_root}} state=directory
+
+
+  - name: Deploy Sample Configuration
+    copy: src=files/sample.html dest={{doc_root}}/index.html
 
   - name: Deploy Sample Configuration Template
-    template: src=templates/info.j2 dest=/var/www/html/info.html
+    template: src=templates/sample.j2 dest={{doc_root}}/sample.html
+
+  - name: Deploy Sample Configuration Template
+    template: src=templates/info.j2 dest={{doc_root}}/info.html
 
 
   handlers:
