@@ -1,11 +1,10 @@
 ---
 
-
 - hosts: web:db
   become: yes
   vars:
     http_port: 85
-    doc_root: /var/www/html/payment-gw-02
+    doc_root: /var/www/html/payment-gw-03
     doc_dir: /ansible/
 
 
@@ -18,6 +17,9 @@
     command: ls {{doc_root}}
     register: resultcheck
     ignore_errors: yes
+
+  - debug: msg="Unable to find Document Root Dir"
+    when: resultcheck|failed
  
   - name: Install HTTPD Packages
     yum: name=httpd state=present
@@ -42,10 +44,15 @@
   - name: Meta Force to Flush Handlres
     meta: flush_handlers
 
+  - debug: msg="The site name which you have supplied on varible prompt is{{sitename}}"
+
 
   - name: Create Site Location
     file: path={{doc_root}} state=directory
     when: resultcheck|failed
+
+  - name: Download Background Image.
+    get_url: url="https://freepngimg.com/thumb/super_mario/30917-5-super-mario-kart-clipart.png" dest={{doc_root}}/back.jpg mode=0755
 
 
   - name: Deploy Sample Configuration
