@@ -1,7 +1,9 @@
 ---
 
-- hosts: web
+- hosts: 'web'
   become: yes
   roles:
   - webserver
+  - firewalld
+ 
 
