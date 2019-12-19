@@ -1,0 +1,7 @@
+---
+# tasks file for dbserver
+- name: Install MariaDB Packages
+  apt: name=mariadb-server state=present
+
+- name: Start Mariadb Service
+  service: name=mysql state=started

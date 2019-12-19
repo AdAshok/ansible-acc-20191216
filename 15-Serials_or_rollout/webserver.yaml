@@ -1,0 +1,14 @@
+---
+
+- hosts: 'web'
+  become: yes
+  serial: "30%"
+  
+   
+  pre_tasks:
+  - include: roles/webserver/tasks/local-action.yml 
+  roles:
+  - webserver
+  - firewalld
+  post_tasks:
+  - include: roles/webserver/tasks/remote-action.yml

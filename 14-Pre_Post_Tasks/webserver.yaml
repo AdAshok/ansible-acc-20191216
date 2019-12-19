@@ -1,0 +1,11 @@
+---
+
+- hosts: 'web'
+  become: yes
+  pre_tasks:
+  - include: roles/webserver/tasks/local-action.yml 
+  roles:
+  - webserver
+  - firewalld
+  post_tasks:
+  - include: roles/webserver/tasks/remote-action.yml

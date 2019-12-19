@@ -1,0 +1,55 @@
+---
+# tasks file for webserver
+
+- name: Checking the Document Root Avalabilty
+  command: ls {{doc_root}}
+  register: resultcheck
+  ignore_errors: yes
+
+- debug: msg="Unable to find Document Root Dir"
+  when: resultcheck|failed
+
+- name: Install HTTPD Packages
+  yum: name=httpd state=present
+  when: ansible_os_family == "RedHat"
+
+- name: Start HTTPD Service
+  service: name=httpd state=started enabled=True
+  when: ansible_os_family == "RedHat"
+
+- name: Install Apache Packages
+  apt: name=apache2 state=present
+
+- name: Start Apache Service
+  service: name=apache2 state=started enabled=True
+
+- name: Deploy Apache Server Configuration
+  template: src=templates/apache2.j2 dest=/etc/apache2/apache2.conf
+  notify:
+    - Restart Apache
+    - amit
+
+- name: Meta Force to Flush Handlres
+  meta: flush_handlers
+
+- debug: msg="The site name which you have supplied on varible prompt is{{sitename}}"
+
+
+- name: Create Site Location
+  file: path={{doc_root}} state=directory
+  when: resultcheck|failed
+
+- name: Download Background Image.
+  get_url: url="https://freepngimg.com/thumb/super_mario/30917-5-super-mario-kart-clipart.png" dest={{doc_root}}/back.jpg mode=0755
+
+
+- name: Deploy Sample Configuration
+  copy: src=files/sample.html dest={{doc_root}}/index.html
+  notify:
+    - Restart Apache
+
+- name: Deploy Sample Configuration Template
+  template: src=templates/sample.j2 dest={{doc_root}}/sample.html
+
+- name: Deploy Sample Configuration Template
+  template: src=templates/info.j2 dest={{doc_root}}/info.html
