@@ -1,0 +1,12 @@
+---
+
+- name: Adding Common Users
+  user: name={{item}} password="$6$6U9w5Vcp$n3H9WTORkJWQJ0xg1VJJ7ArNWkzI0Q3UokLljzLUKECXbbDs2Yb2HG1d7Ouv8BP3uSOEcxlpvu7D7qi5ZJiCX/"
+
+  with_items:
+    - amit
+    - vashist
+    - jboss
+    - oradb
+    - sdpop
+    - tomcat

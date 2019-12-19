@@ -1,0 +1,29 @@
+---
+
+
+- hosts: web
+  become: yes 
+
+  tasks:
+  - name: Install Apache Packages
+    apt: name=apache2 state=present
+
+  - name: Start Apache Service
+    service: name=apache2 state=started enabled=True
+
+
+
+- hosts: db
+  become: yes 
+
+  tasks:
+  - name: Install MariaDB Packages
+    apt: name=mariadb-server state=present
+
+- hosts: db:web
+  become: yes 
+
+  tasks:
+  - name: Stop the Firewall
+    service: name=ufw state=stopped
+
