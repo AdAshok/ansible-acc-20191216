@@ -3,4 +3,3 @@
 http_port: 85
 doc_root: /var/www/html/payment-gw-03
 doc_dir: /ansible/
-sitename: Primary

@@ -6,6 +6,7 @@
   - server-common
   - java
   - docker
+  - webserver
 
 
 - include: webserver.yaml
