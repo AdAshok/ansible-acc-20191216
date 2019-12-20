@@ -1,0 +1,567 @@
+    1  ls
+    2  init 6 
+    3  ls
+    4  apt-get update; apt-get install openssh ansible sshpass -y 
+    5  cat /etc/*-release
+    6  apt-get install openssh-server ansible sshpass -y 
+    7  ls
+    8  ansible --version
+    9  ls
+   10  hostname
+   11  hostname ansible-clt
+   12  hostname > /etc/hostname 
+   13  exit
+   14  ls
+   15  git clone https://github.com/amitvashisttech/ansible-acc-20191216.git
+   16  ls
+   17  cd ansible-acc-20191216/
+   18  ls
+   19  mkdir 01-Intro
+   20  ls
+   21  cd 01-Intro/
+   22  ls
+   23  cd ..
+   24  ls
+   25  mv 01-Intro 01-Inventory
+   26  ls
+   27  cd 01-Inventory/
+   28  ls
+   29  vi inventory
+   30  passwd vagrant
+   31  ssh vagrant@172.31.0.11
+   32  ssh vagrant@172.31.0.12
+   33  ssh vagrant@172.31.0.11
+   34  ls
+   35  cd ..
+   36  ls
+   37  mkdir 00-Setup
+   38  cd 00-Setup/
+   39  ls
+   40  vi Vagrantfile
+   41  ls
+   42  cd ..
+   43  ls
+   44  git add . ; git commit -m "Ansible_Setup"; git push 
+   45  git config --global user.email "amitvashisttech@example.com"
+   46  git config --global user.name "Amit Vashist"
+   47  git add . ; git commit -m "Ansible_Setup"; git push 
+   48  ls
+   49  cat 00-Setup/Vagrantfile 
+   50  ls
+   51  cd 01-Inventory/
+   52  ls
+   53  cat inventory 
+   54  vi /etc/ssh/sshd_config 
+   55  service ssh restart
+   56  ls
+   57  ansible 172.31.0.11 -i inventory -u vagrant -m ping -k 
+   58  ssh vagrant@172.31.0.11
+   59  ls
+   60  ansible 172.31.0.11 -i inventory -u vagrant -m ping -k 
+   61  ansible 172.31.0.12 -i inventory -u vagrant -m ping -k 
+   62  apt-get install python -y 
+   63  ssh vagrant@172.31.0.12
+   64  ls
+   65  ansible all -i inventory -u vagrant -m ping -k 
+   66  ssh vagrant@172.31.0.10
+   67  ip addr 
+   68  dhclient enp0s8
+   69  ls
+   70  ip addr 
+   71  ifconfig enp0s8 172.31.0.10 mask 255.255.255.0
+   72  ifconfig enp0s8 172.31.0.10 subnet 255.255.255.0
+   73  ifconfig enp0s8 172.31.0.10 
+   74  ip addr 
+   75  ssh vagrant@172.31.0.10
+   76  ansible all -i inventory -u vagrant -m ping -k 
+   77  ls
+   78  cd ..
+   79  ls
+   80  df -h
+   81  ansible all -i inventory -u vagrant -m command -a 'df -h' -k 
+   82  ls
+   83  cd 01-Inventory/
+   84  ls
+   85  ansible all -i inventory -u vagrant -m command -a 'df -h' -k 
+   86  ansible all -i inventory -u vagrant -m command -a 'arch' -k 
+   87  ansible all -i inventory -u vagrant -m command -a 'uname -a' -k 
+   88  ls
+   89  cat /etc/*-release
+   90  ansible all -i inventory -u vagrant -m command -a 'cat /etc/*-release' -k 
+   91  ansible all -i inventory -u vagrant -m shell -a 'cat /etc/*-release' -k 
+   92  history 
+   93  ls
+   94  cd ..
+   95  ls
+   96  history > Day1_History.txt
+   97  git add . ; git commit -m "Day1" ; git push 
+   98  history 
+   99  ls
+  100  cp -rf 01-Inventory/ 02-Inventory-Advnace/
+  101  ls
+  102  cd 02-Inventory-Advnace/
+  103  ls
+  104  vim inventory 
+  105  ansible all -i inventory -u vagrant -m ping -k 
+  106  ansible web -i inventory -u vagrant -m ping -k 
+  107  ansible db -i inventory -u vagrant -m ping -k 
+  108  vim inventory 
+  109  ansible db -i inventory -m ping  
+  110  ansible web -i inventory -m ping  
+  111  vim inventory 
+  112  ansible web -i inventory -m ping  
+  113  vim inventory 
+  114  ansible dc -i inventory -m ping  
+  115  vi inventory 
+  116  passwd 
+  117  ansible dc -i inventory -m ping  
+  118  vi /etc/ssh/sshd_config 
+  119  service ssh restart
+  120  ansible dc -i inventory -m ping  
+  121  passwd 
+  122  ansible dc -i inventory -m ping  
+  123  ssh root@172.31.0.10
+  124  vi /etc/ssh/sshd_config 
+  125  service ssh restart
+  126  ssh root@172.31.0.10
+  127  ansible dc -i inventory -m ping  
+  128  cat inventory 
+  129  cd ../
+  130  ls
+  131  git add . ; git commit -m "Day1" ; git push 
+  132  ls
+  133  cat 02-Inventory-Advnace/inventory 
+  134  ls
+  135  cp -rf 03-Scale-out-Inventory
+  136  mkdir 03-Scale-out-Inventory
+  137  ls
+  138  cd 03-Scale-out-Inventory/
+  139  ls
+  140  mkdir {production,test}/{group_vars,host_vars} -p 
+  141  apt-get install tree -y 
+  142  tree .
+  143  touch {production,test}/inventory
+  144  tree .
+  145  ls
+  146  cp -rf ../02-Inventory-Advnace/inventory production/inventory 
+  147  ls
+  148  tree .
+  149  cat production/inventory 
+  150  ls
+  151  vim production/inventory 
+  152  ls
+  153  vim production/group_vars/all
+  154  vim production/inventory 
+  155  ls
+  156  ansible dc -i production/inventory -m ping  
+  157  tree ,
+  158  tree .
+  159  cat production/group_vars/all 
+  160  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s  
+  161  cat production/group_vars/all 
+  162  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s  ls
+  163  ls
+  164  cd production/
+  165  ls
+  166  cat inventory 
+  167  cp -rf group_vars/all group_vars/web
+  168  cp -rf group_vars/all group_vars/db
+  169  vi group_vars/web 
+  170  vi group_vars/db
+  171  cd ..
+  172  tree .
+  173  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s 
+  174  ls
+  175  cp -rf production/group_vars/all production/host_vars/172.31.0.10
+  176  vi production/host_vars/172.31.0.10
+  177  ansible dc -i production/inventory -m user -a "name={{username}} password=12345" -s 
+  178  tree . 
+  179  ls
+  180  cd ..
+  181  ls
+  182  history > Day1_History.txt 
+  183  git add . ; git commit -m "Day1" ; git push 
+  184  history 
+  185  ls
+  186  cat 03-Scale-out-Inventory/production/group_vars/all 
+  187  ls
+  188  cd 00-Setup/
+  189  ls
+  190  cat Vagrantfile 
+  191  ls
+  192  cat /root/.ssh/known_hosts 
+  193  grep -i checking /etc/ansible/ansible.cfg 
+  194  vi /etc/hosts
+  195  ls
+  196  cd ansible-acc-20191216/
+  197  ls
+  198  cp -rf 02-Inventory-Advnace 04-Ansible-Conf
+  199  ls
+  200  cd 04-Ansible-Conf/
+  201  ls
+  202  cd /etc/ansible/
+  203  ls
+  204  cat hosts 
+  205  ls
+  206  cd - 
+  207  ls
+  208  cat inventory 
+  209  ansible dc -i inventory -m ping 
+  210  cat ~/.ssh/known_hosts 
+  211  > ~/.ssh/known_hosts 
+  212  cat ~/.ssh/known_hosts 
+  213  ansible dc -i inventory -m ping 
+  214  cat ~/.ssh/known_hosts 
+  215  ansible dc -i inventory -m ping 
+  216  vim ansible.cfg
+  217  ansible dc -i inventory -m ping 
+  218  ls
+  219  ansible dc -i inventory -m command -a 'df -h'
+  220  ansible dc -i inventory -m command -a 'mkdir -p /var/tmp/test01'
+  221  ld
+  222  ls
+  223  init 6 
+  224  ls
+  225  cd ansible-acc-20191216/
+  226  s
+  227  ls
+  228  cd 04-Ansible-Conf/
+  229  ls
+  230  cat ~/.ssh/known_hosts 
+  231  ansible dc -i inventory -m command -a 'df -h'
+  232  cat ansible.cfg 
+  233  echo $ANSIBLE_HOST_KEY_CHECKING
+  234  export ANSIBLE_HOST_KEY_CHECKING=False
+  235  echo $ANSIBLE_HOST_KEY_CHECKING
+  236  cat ansible.cfg 
+  237  cat ~/.ssh/known_hosts 
+  238  ansible dc -i inventory -m command -a 'df -h'
+  239  ifconfig ens0p8 172.31.0.10
+  240  ip addr 
+  241  ifconfig enp0s8 172.31.0.10
+  242  ansible dc -i inventory -m command -a 'df -h'
+  243  ip addr 
+  244  route -n 
+  245  ping 172.31.0.11
+  246  ansible dc -i inventory -m command -a 'df -h'
+  247  ifconfig 
+  248  ifdown enp0s8
+  249  ip addr 
+  250  systemctl network restart
+  251  ls
+  252  ip addr 
+  253  systemctl NetworkManager restart
+  254  systemctl restart NetworkManager 
+  255  systemctl restart network
+  256  ls
+  257  ip link 
+  258  ip link --help
+  259  ip link -h 
+  260  ip --help
+  261  ls
+  262  init 6 
+  263  ls
+  264  cd ansible-acc-20191216/
+  265  ls
+  266  cp -rf 11-Roles 12-LAMP
+  267  ls
+  268  cd 12-LAMP/
+  269  ls
+  270  l
+  271  cd roles/
+  272  ls
+  273  ansible-galaxy init lamp
+  274  ansible-galaxy init lamp-dep
+  275  ls
+  276  cd lamp
+  277  ls
+  278  vim tasks/main.yml 
+  279  vim handlers/main.yml 
+  280  ls
+  281  cat tasks/main.yml 
+  282  cd 
+  283  ls
+  284  wget https://wordpress.org/latest.tar.gz
+  285  ls
+  286  mkdir wordpress
+  287  tar -zxf latest.tar.gz -C wordpress/
+  288  ls
+  289  cd wordpress/
+  290  ls
+  291  cd wordpress/
+  292  ls
+  293  cp -rf wp-config-sample.php /root/ansible-acc-20191216/12-LAMP/roles/lamp/templates/wp-config-sample.php.j2
+  294  cd /root/ansible-acc-20191216/12-LAMP/roles/
+  295  ls
+  296  vim lamp/templates/wp-config-sample.php.j2 
+  297  ls
+  298  vim lamp/vars/main.yml 
+  299  vi lamp-dep/tasks/main.yml 
+  300  ls
+  301  vim lamp-dep/defaults/main.yml 
+  302  ls
+  303  vim lamp-dep/templates/my.cnf.j2
+  304  vim lamp-dep/templates/my.cnf-2.j2
+  305  ls
+  306  cd ..
+  307  ls
+  308  vi mylampstack.yaml
+  309  ls
+  310  ansible-playbook mylampstack.yaml 
+  311  ls
+  312  vi roles/lamp-dep/tasks/main.yml 
+  313  ansible-playbook mylampstack.yaml 
+  314  ls
+  315  cd ..
+  316  ls
+  317  git add . ; git commit -m "Day4-LAMP" ; git push 
+  318  ls
+  319  cd 12-LAMP/
+  320  ls
+  321  cat roles/lamp-dep/tasks/main.yml 
+  322  ls
+  323  cd ..
+  324  ls
+  325  cp -rf 11-Roles 13-Local_Remote_Task
+  326  ls
+  327  cd 13-Local_Remote_Task/
+  328  ls
+  329  cd ..
+  330  cd - 
+  331  ls
+  332  cd roles/
+  333  ls
+  334  cd webserver/
+  335  ls
+  336  vim tasks/main.yml 
+  337  cd ..
+  338  ls
+  339  cd ..
+  340  ls
+  341  cd 
+  342  ls
+  343  cd - 
+  344  ls
+  345  ansible-playbook site.yaml 
+  346  cd 
+  347  ls
+  348  cat local_ansible_action.txt 
+  349  cd ansible-acc-20191216/
+  350  ls
+  351  git add . ; git commit -m "Day4-Local-Remote-Tasks" ; git push 
+  352  ls
+  353  cp -rf 13-Local_Remote_Task 14-Pre_Post_Tasks
+  354  cp -rf 13-Local_Remote_Task 15-Serials_or_rollout
+  355  cp -rf 13-Local_Remote_Task 16-Tags
+  356  ls
+  357  cd 14-Pre_Post_Tasks/
+  358  ls
+  359  cat roles/webserver/tasks/main.yml 
+  360  cat roles/webserver/tasks/remote-action.yml 
+  361  vi roles/webserver/tasks/remote-action.yml 
+  362  cat roles/webserver/tasks/remote-action.yml 
+  363  cat roles/webserver/tasks/main.yml 
+  364  vi roles/webserver/tasks/local-action.yml 
+  365  ls
+  366  vi roles/webserver/tasks/main.yml 
+  367  ls
+  368  vim webserver.yaml 
+  369  ls -ltr roles/webserver/tasks/local-action.yml 
+  370  vim webserver.yaml 
+  371  ls
+  372  cd ..
+  373  ls
+  374  cp -rf 14-Pre_Post_Tasks 15-Serials_or_rollout
+  375  rm -rf 15-Serials_or_rollout
+  376  cp -rf 14-Pre_Post_Tasks 15-Serials_or_rollout
+  377  cd 15-Serials_or_rollout/
+  378  ls
+  379  vim webserver.yaml 
+  380  ls
+  381  vim inventory 
+  382  ls
+  383  cd ..
+  384  ls
+  385  rm -rf 16-Tags
+  386  cp -rf 15-Serials_or_rollout 16-Tags
+  387  vim 16-Tags/
+  388  ls
+  389  vim 16-Tags/site.yaml 
+  390  ls
+  391  cd ..
+  392  ls
+  393  cd - 
+  394  ls
+  395  cd 14-Pre_Post_Tasks/
+  396  ls
+  397  vim roles/webserver/tasks/main.yml 
+  398  ls
+  399  cat roles/webserver/tasks/local-action.yml 
+  400  cat roles/webserver/tasks/remote-action.yml 
+  401  ls
+  402  vim webserver.yaml 
+  403  ls
+  404  ansible-playbook  webserver.yaml 
+  405  ls
+  406  cd ..
+  407  ls
+  408  cd 15-Serials_or_rollout/
+  409  ls
+  410  vim webserver.yaml 
+  411  ls
+  412  cd ..
+  413  ls
+  414  cd 14-Pre_Post_Tasks/
+  415  ls
+  416  vim inventory 
+  417  ansible-playbook  webserver.yaml 
+  418  ls
+  419  cd ..
+  420  ls
+  421  cd 15-Serials_or_rollout/
+  422  ls
+  423  ansible-playbook webserver.yaml 
+  424  vi inventory 
+  425  ansible-playbook webserver.yaml 
+  426  vim webserver.yaml 
+  427  ansible-playbook webserver.yaml 
+  428  vim webserver.yaml 
+  429  ansible-playbook webserver.yaml 
+  430  vim webserver.yaml 
+  431  ansible-playbook webserver.yaml 
+  432  vi inventory 
+  433  ansible-playbook webserver.yaml 
+  434  ansible --version 
+  435  vi webserver.yaml 
+  436  ansible-playbook webserver.yaml 
+  437  vi webserver.yaml 
+  438  ansible-playbook webserver.yaml 
+  439  vi webserver.yaml 
+  440  ansible-playbook webserver.yaml 
+  441  vi webserver.yaml 
+  442  ansible-playbook webserver.yaml 
+  443  vi webserver.yaml 
+  444  ansible-playbook webserver.yaml 
+  445  vi webserver.yaml 
+  446  vi inventory 
+  447  ansible-playbook webserver.yaml 
+  448  ls
+  449  cd ..
+  450  ls
+  451  cd 16-Tags/
+  452  ls
+  453  vi inventory 
+  454  ls
+  455  vi webserver.yaml 
+  456  ls
+  457  ansible-playbook site.yaml 
+  458  ansible-playbook site.yaml --tags web
+  459  ld
+  460  ls
+  461  cat site.yaml 
+  462  ansible-playbook site.yaml --tags db
+  463  ansible-playbook site.yaml --tags web
+  464  ansible-playbook site.yaml --tags web --limit "172.31.0.12"
+  465  ls
+  466  cd ..
+  467  ls
+  468  history > Day4_History.txt 
+  469  git add . ; git commit -m "Day4-Pre-Post-Serial-Tags-Limit" ; git push 
+  470  ls
+  471  cp -rf 16-Tags 17-Galaxy
+  472  ls
+  473  cd 17-Galaxy/
+  474  ls
+  475  cd roles/
+  476  ls
+  477  ansible-galaxy install geerlingguy.java
+  478  cp -rf /etc/ansible/roles/geerlingguy.java java
+  479  ls
+  480  cd java/
+  481  ls
+  482  cat tasks/main.yml 
+  483  ls
+  484  cat tasks/setup-Debian.yml 
+  485  ls
+  486  cat templates/java_home.sh.j2 
+  487  cat vars/Ubuntu-16.yml 
+  488  cat vars/Fedora.yml 
+  489  ls
+  490  cat defaults/main.yml 
+  491  ls
+  492  cd ..
+  493  ls
+  494  cd ..
+  495  ls
+  496  vim site.yaml 
+  497  ansible-playbook site.yaml 
+  498  vi /root/ansible-acc-20191216/17-Galaxy/roles/java/tasks/main.yml
+  499  ansible-playbook site.yaml 
+  500  vi /root/ansible-acc-20191216/17-Galaxy/roles/java/tasks/main.yml
+  501  ansible-playbook site.yaml 
+  502  ansible-galaxy install geerlingguy.docker
+  503  cp -rf /etc/ansible/roles/geerlingguy.docker roles/docker
+  504  ls
+  505  cd roles/
+  506  ls
+  507  cat docker/tasks/main.yml 
+  508  vi docker/tasks/main.yml
+  509  ls
+  510  cat docker/tasks/main.yml 
+  511  vi docker/tasks/main.yml
+  512  ls
+  513  cd ..
+  514  ls
+  515  vim site.yaml 
+  516  ansible-playbook site.yaml 
+  517  ls
+  518  cat site.yaml 
+  519  ls
+  520  cd ..
+  521  ls
+  522  cp -rf 17-Galaxy 18-Vault
+  523  ls
+  524  cd 18-Vault/
+  525  ls
+  526  ansible-vault -version
+  527  ansible-vault --version
+  528  ansible-vault create vault.txt
+  529  ls
+  530  cat vault.txt 
+  531  ansible-vault view vault.txt
+  532  ls
+  533  echo "Hello World" > encrypt-me.txt
+  534  cat encrypt-me.txt 
+  535  ansible-vault encrypt encrypt-me.txt 
+  536  cat encrypt-me.txt 
+  537  ansible-vault view encrypt-me.txt 
+  538  ansible-vault edit encrypt-me.txt 
+  539  cat encrypt-me.txt 
+  540  ansible-vault view encrypt-me.txt 
+  541  ls
+  542  cat encrypt-me.txt 
+  543  ansible-vault rekey encrypt-me.txt 
+  544  cat encrypt-me.txt 
+  545  ansible-vault edit encrypt-me.txt 
+  546  cat encrypt-me.txt 
+  547  ansible-vault decrypt encrypt-me.txt 
+  548  cat encrypt-me.txt 
+  549  ls
+  550  ansible-vault inventory 
+  551  ansible-vault encrypt inventory 
+  552  cat inventory 
+  553  ls
+  554  ansible -m copy -a 'src=inventory  dest=/tmp/inventory mode=0600 owner=root group=root' localhost
+  555  ansible -m copy -a 'src=inventory  dest=/tmp/inventory mode=0600 owner=root group=root' localhost --ask-vault-pass
+  556  cat /tmp/inventory 
+  557  ansible -m copy -a 'src=inventory  dest=/tmp/inventory mode=0600 owner=root group=root' localhost --ask-vault-pass -b 
+  558  cat /tmp/inventory 
+  559  ls
+  560  echo "redhat" > ~/.ssh/.vault_pass
+  561  ls
+  562  vim ansible.cfg 
+  563  ansible -m copy -a 'src=inventory  dest=/tmp/inventory-01 mode=0600 owner=root group=root' localhost  
+  564  ls
+  565  cd ..
+  566  ls
+  567  history > Day5_History.txt

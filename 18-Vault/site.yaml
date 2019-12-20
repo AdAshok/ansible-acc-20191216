@@ -1,0 +1,14 @@
+---
+
+- hosts: all 
+  become: yes
+  roles:
+  - server-common
+  - java
+  - docker
+
+
+- include: webserver.yaml
+  tags: web
+- include: dbserver.yaml
+  tags: db 
